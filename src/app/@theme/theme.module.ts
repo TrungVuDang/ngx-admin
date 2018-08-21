@@ -17,6 +17,7 @@ import {
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
+  NbProgressBarModule,
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -30,8 +31,15 @@ import {
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,
   TinyMCEComponent,
+  ThemeSwitcherListComponent,
 } from './components';
-import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
+import {
+  CapitalizePipe,
+  PluralPipe,
+  RoundPipe,
+  TimingPipe,
+  NumberWithCommasPipe,
+} from './pipes';
 import {
   OneColumnLayoutComponent,
   SampleLayoutComponent,
@@ -40,6 +48,7 @@ import {
 } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
+import { CORPORATE_THEME } from './styles/theme.corporate';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -57,13 +66,15 @@ const NB_MODULES = [
   NbPopoverModule,
   NbContextMenuModule,
   NgbModule,
-  NbSecurityModule, // *nbIsGranted directive
+  NbSecurityModule, // *nbIsGranted directive,
+  NbProgressBarModule,
 ];
 
 const COMPONENTS = [
   SwitcherComponent,
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,
+  ThemeSwitcherListComponent,
   HeaderComponent,
   FooterComponent,
   SearchInputComponent,
@@ -75,11 +86,16 @@ const COMPONENTS = [
   TwoColumnsLayoutComponent,
 ];
 
+const ENTRY_COMPONENTS = [
+  ThemeSwitcherListComponent,
+];
+
 const PIPES = [
   CapitalizePipe,
   PluralPipe,
   RoundPipe,
   TimingPipe,
+  NumberWithCommasPipe,
 ];
 
 const NB_THEME_PROVIDERS = [
@@ -87,7 +103,7 @@ const NB_THEME_PROVIDERS = [
     {
       name: 'cosmic',
     },
-    [ DEFAULT_THEME, COSMIC_THEME ],
+    [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME ],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
@@ -97,6 +113,7 @@ const NB_THEME_PROVIDERS = [
   imports: [...BASE_MODULES, ...NB_MODULES],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
   declarations: [...COMPONENTS, ...PIPES],
+  entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders {
